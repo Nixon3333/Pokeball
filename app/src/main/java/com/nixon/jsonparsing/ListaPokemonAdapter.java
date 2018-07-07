@@ -1,7 +1,10 @@
 package com.nixon.jsonparsing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -37,7 +41,9 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
 
         Glide.with(context)
                 .load("http://pokeapi.co/media/sprites/pokemon/" + p.getNumber() + ".png")
-
+                //
+                //.crossFade()
+                //.diskCacheStategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.imageView);
     }
 
@@ -52,16 +58,33 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
         private TextView textView;
+        private CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
             textView = itemView.findViewById(R.id.textView);
+            cardView = itemView.findViewById(R.id.cardView);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (view.getId()) {
+                        case R.id.cardView:
+                            Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                            view.getContext().startActivity(intent);
+
+                            break;
+                    }
+                }
+            });
         }
+
+
     }
 }

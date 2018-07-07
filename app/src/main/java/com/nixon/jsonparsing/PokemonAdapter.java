@@ -26,5 +26,6 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
     static class ViewHolder {
         public ImageView imageView;
         public TextView textView;
+
     }
 }
