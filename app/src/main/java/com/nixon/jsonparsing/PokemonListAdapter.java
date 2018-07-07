@@ -3,7 +3,6 @@ package com.nixon.jsonparsing;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,16 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapter.ViewHolder> {
+public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
 
     private ArrayList<Pokemon> dataset;
     private Context context;
 
-    public ListaPokemonAdapter(Context context) {
+    public PokemonListAdapter(Context context) {
         this.context = context;
         dataset = new ArrayList<>();
     }
@@ -53,8 +51,8 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
         return dataset.size();
     }
 
-    public void adicionalListaPokemon(ArrayList<Pokemon> listaPokemon) {
-        dataset.addAll(listaPokemon);
+    public void addPokemonList(ArrayList<Pokemon> pokemonList) {
+        dataset.addAll(pokemonList);
         notifyDataSetChanged();
     }
 

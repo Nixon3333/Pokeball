@@ -2,7 +2,7 @@ package com.nixon.jsonparsing;
 
 import java.util.ArrayList;
 
-public class PokemonRespuesta {
+public class PokemonResponse {
 
     private ArrayList<Pokemon> results;
 

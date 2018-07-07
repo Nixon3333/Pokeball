@@ -4,7 +4,6 @@ import android.util.Log;
 
 public class Pokemon {
 
-    private static final String TAG = "pok";
 
     private int number;
 

@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
     private Retrofit retrofit;
 
     private RecyclerView recyclerView;
-    private ListaPokemonAdapter listaPokemonAdapter;
+    private PokemonListAdapter pokemonListAdapter;
 
     private int offset;
     private boolean aptoParaCargar;
@@ -32,8 +32,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycleView);
-        listaPokemonAdapter = new ListaPokemonAdapter(this);
-        recyclerView.setAdapter(listaPokemonAdapter);
+        pokemonListAdapter = new PokemonListAdapter(this);
+        recyclerView.setAdapter(pokemonListAdapter);
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -71,27 +71,27 @@ public class MainActivity extends Activity {
 
     private void getData(int offset) {
         PokemonService service = retrofit.create(PokemonService.class);
-        Call<PokemonRespuesta> pokemonRespuestaCall = service.obtenerListaPokemon(30, offset);
+        Call<PokemonResponse> pokemonResponseCall = service.getPokemonList(30, offset);
 
-        pokemonRespuestaCall.enqueue(new Callback<PokemonRespuesta>() {
+        pokemonResponseCall.enqueue(new Callback<PokemonResponse>() {
 
             @Override
-            public void onResponse(Call<PokemonRespuesta> call, Response<PokemonRespuesta> response) {
+            public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
                 aptoParaCargar = true;
                 if (response.isSuccessful()) {
-                    PokemonRespuesta pokemonRespuesta = response.body();
-                    ArrayList<Pokemon> listaPokemon = pokemonRespuesta.getResults();
+                    PokemonResponse pokemonResponse = response.body();
+                    ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
 
-                    listaPokemonAdapter.adicionalListaPokemon(listaPokemon);
+                    pokemonListAdapter.addPokemonList(pokemonList);
                 } else {
-                    Log.d(TAG, "ERRRROR" + response.errorBody());
+                    Log.d(TAG, "onResponse: " + response.errorBody());
                 }
             }
 
             @Override
-            public void onFailure(Call<PokemonRespuesta> call, Throwable t) {
+            public void onFailure(Call<PokemonResponse> call, Throwable t) {
                 aptoParaCargar = true;
-                Log.d(TAG, "onFailure " + t.getMessage());
+                Log.d(TAG, "onFailure: " + t.getMessage());
             }
         }
         );
