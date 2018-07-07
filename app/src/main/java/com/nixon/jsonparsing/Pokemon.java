@@ -1,9 +1,16 @@
 package com.nixon.jsonparsing;
 
+import android.util.Log;
+
 public class Pokemon {
 
+    private static final String TAG = "pok";
+
+    private int number;
+
     private String name;
-    private String imageUrl;
+
+    private String url;
 
     public Pokemon() {
 
@@ -17,11 +24,22 @@ public class Pokemon {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getNumber() {
+
+        String[] urlParts = url.split("/");
+
+        return Integer.parseInt(urlParts[urlParts.length - 1]);
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

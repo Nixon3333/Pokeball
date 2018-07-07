@@ -5,6 +5,6 @@ import retrofit2.http.GET;
 
 public interface PokemonService {
 
-    @GET("pokemon/?limit=30&offset=30")
+    @GET("pokemon") ///?limit=30&offset=30
     Call<PokemonRespuesta> obtenerListaPokemon();
 }

@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycleView);
-        listaPokemonAdapter = new ListaPokemonAdapter();
+        listaPokemonAdapter = new ListaPokemonAdapter(this);
         recyclerView.setAdapter(listaPokemonAdapter);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);

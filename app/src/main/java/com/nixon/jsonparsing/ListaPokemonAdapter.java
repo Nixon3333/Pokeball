@@ -1,21 +1,25 @@
 package com.nixon.jsonparsing;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapter.ViewHolder> {
 
     private ArrayList<Pokemon> dataset;
+    private Context context;
 
-    public ListaPokemonAdapter() {
+    public ListaPokemonAdapter(Context context) {
+        this.context = context;
         dataset = new ArrayList<>();
     }
 
@@ -30,6 +34,11 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Pokemon p = dataset.get(i);
         viewHolder.textView.setText(p.getName());
+
+        Glide.with(context)
+                .load("http://pokeapi.co/media/sprites/pokemon/" + p.getNumber() + ".png")
+
+                .into(viewHolder.imageView);
     }
 
 
