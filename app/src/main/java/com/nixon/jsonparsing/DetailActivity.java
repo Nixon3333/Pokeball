@@ -30,7 +30,6 @@ public class DetailActivity extends Activity {
     private int id;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +38,6 @@ public class DetailActivity extends Activity {
         imagePoke = findViewById(R.id.imagePoke);
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-
 
 
         retrofit = new Retrofit.Builder()
@@ -51,17 +49,19 @@ public class DetailActivity extends Activity {
         weightPoke = findViewById(R.id.weightPoke);
         typePoke = findViewById(R.id.typePoke);
         statsPoke = findViewById(R.id.statsPoke);
-        tvId = findViewById(R.id.tvId);
+
+
 
         getDetail(name);
 
-        Glide.with(this)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+id+".png")
 
-                .into(imagePoke);
+
+
+
 
 
     }
+
 
     private void getDetail(String name) {
         DetailService service = retrofit.create(DetailService.class);
@@ -70,6 +70,8 @@ public class DetailActivity extends Activity {
         detailResponseCall.enqueue(new Callback<DetailResponse>() {
             @Override
             public void onResponse(Call<DetailResponse> call, Response<DetailResponse> response) {
+
+
                 if (response.isSuccessful()) {
                     DetailResponse detailResponse = response.body();
 
@@ -81,20 +83,25 @@ public class DetailActivity extends Activity {
 
 
                     id = detailResponse.getId();
-tvId.setText(String.valueOf(id));
 
 
-
+                    Glide.with(getApplicationContext())
+                            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+                                    + id + ".png")
+                            .into(imagePoke);
 
 
                     namePoke.setText(name);
                     heightPoke.setText(height);
                     weightPoke.setText(weight);
                     typePoke.setText(String.valueOf(types[0].getType()));
-                    statsPoke.setText(String.valueOf(stats[0]));
+                    statsPoke.setText(String.valueOf(stats[5]) + "\n" +
+                            String.valueOf(stats[4]) + "\n" +
+                            String.valueOf(stats[3]));
 
 
                 }
+
             }
 
             @Override
@@ -102,6 +109,7 @@ tvId.setText(String.valueOf(id));
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
+
     }
 
 }

@@ -5,9 +5,11 @@
     android:orientation="vertical">
 
     <ImageView
+
         android:id="@+id/imagePoke"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="200dp"
+        android:background="@drawable/backpoke" />
 
     <TextView
         android:id="@+id/namePoke"
@@ -33,11 +35,5 @@
         android:id="@+id/statsPoke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tvId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
 </LinearLayout>

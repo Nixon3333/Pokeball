@@ -35,7 +35,7 @@ public class Stats {
     @Override
     public String toString()
     {
-        return stat.getName() + base_stat;
+        return stat.getName() + " : " + base_stat;
     }
 }
 

@@ -12,10 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,7 +19,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     private ArrayList<Pokemon> dataset;
     private Context context;
-    private Picasso picasso;
+
 
 
     public PokemonListAdapter(Context context) {
@@ -47,8 +43,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         Glide.with(context)
                 .load("http://pokeapi.co/media/sprites/pokemon/" + p.getNumber() + ".png")
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.i))
                 .into(viewHolder.imageView);
     }
 
