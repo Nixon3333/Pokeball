@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -26,10 +28,14 @@ public class MainActivity extends Activity {
     private int offset;
     private boolean loading;
 
+    private Button btnRandom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btnRandom = findViewById(R.id.btnRandom);
 
         recyclerView = findViewById(R.id.recycleView);
         pokemonListAdapter = new PokemonListAdapter(this);
@@ -67,36 +73,46 @@ public class MainActivity extends Activity {
         loading = true;
         offset = 0;
 
+
+        getData(offset);
+
+
+    }
+
+    public void btnRandomClick(View view) {
+        pokemonListAdapter.removePokemonList();
+        offset = (int) (Math.random() * 100);
         getData(offset);
 
     }
 
     private void getData(int offset) {
+        Log.d(TAG, "offset = " + offset);
         PokemonService service = retrofit.create(PokemonService.class);
         Call<PokemonResponse> pokemonResponseCall = service.getPokemonList(30, offset);
 
         pokemonResponseCall.enqueue(new Callback<PokemonResponse>() {
 
-            @Override
-            public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
-                loading = true;
-                if (response.isSuccessful()) {
-                    PokemonResponse pokemonResponse = response.body();
+                                        @Override
+                                        public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
+                                            loading = true;
+                                            if (response.isSuccessful()) {
+                                                PokemonResponse pokemonResponse = response.body();
 
-                    ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
+                                                ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
 
-                    pokemonListAdapter.addPokemonList(pokemonList);
-                } else {
-                    Log.d(TAG, "onResponse: " + response.errorBody());
-                }
-            }
+                                                pokemonListAdapter.addPokemonList(pokemonList);
+                                            } else {
+                                                Log.d(TAG, "onResponse: " + response.errorBody());
+                                            }
+                                        }
 
-            @Override
-            public void onFailure(Call<PokemonResponse> call, Throwable t) {
-                loading = true;
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        }
+                                        @Override
+                                        public void onFailure(Call<PokemonResponse> call, Throwable t) {
+                                            loading = true;
+                                            Log.d(TAG, "onFailure: " + t.getMessage());
+                                        }
+                                    }
         );
     }
 
