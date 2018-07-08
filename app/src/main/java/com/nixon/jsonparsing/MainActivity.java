@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     private PokemonListAdapter pokemonListAdapter;
 
     private int offset;
-    private boolean aptoParaCargar;
+    private boolean loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
         recyclerView.setHasFixedSize(true);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -47,9 +48,9 @@ public class MainActivity extends Activity {
                     int totalItemCount = gridLayoutManager.getItemCount();
                     int pastVisibleItems = gridLayoutManager.findFirstVisibleItemPosition();
 
-                    if (aptoParaCargar) {
+                    if (loading) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            aptoParaCargar = false;
+                            loading = false;
                             offset += 30;
                             getData(offset);
                         }
@@ -63,7 +64,7 @@ public class MainActivity extends Activity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        aptoParaCargar = true;
+        loading = true;
         offset = 0;
 
         getData(offset);
@@ -77,9 +78,10 @@ public class MainActivity extends Activity {
 
             @Override
             public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
-                aptoParaCargar = true;
+                loading = true;
                 if (response.isSuccessful()) {
                     PokemonResponse pokemonResponse = response.body();
+
                     ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
 
                     pokemonListAdapter.addPokemonList(pokemonList);
@@ -90,7 +92,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFailure(Call<PokemonResponse> call, Throwable t) {
-                aptoParaCargar = true;
+                loading = true;
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         }

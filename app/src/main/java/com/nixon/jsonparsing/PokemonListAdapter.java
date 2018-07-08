@@ -13,12 +13,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
 
     private ArrayList<Pokemon> dataset;
     private Context context;
+
 
     public PokemonListAdapter(Context context) {
         this.context = context;
@@ -34,14 +37,13 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
         Pokemon p = dataset.get(i);
         viewHolder.textView.setText(p.getName());
 
+
         Glide.with(context)
                 .load("http://pokeapi.co/media/sprites/pokemon/" + p.getNumber() + ".png")
-                //
-                //.crossFade()
-                //.diskCacheStategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.imageView);
     }
 
@@ -62,6 +64,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         private TextView textView;
         private CardView cardView;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -69,12 +72,15 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
             textView = itemView.findViewById(R.id.textView);
             cardView = itemView.findViewById(R.id.cardView);
 
+
+
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     switch (view.getId()) {
                         case R.id.cardView:
                             Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                            intent.putExtra("name", textView.getText().toString());
                             view.getContext().startActivity(intent);
 
                             break;

@@ -1,7 +1,5 @@
 package com.nixon.jsonparsing;
 
-import android.util.Log;
-
 public class Pokemon {
 
 
@@ -10,6 +8,9 @@ public class Pokemon {
     private String name;
 
     private String url;
+    private int weight;
+
+
 
     public Pokemon() {
 
@@ -21,6 +22,14 @@ public class Pokemon {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public String getUrl() {
