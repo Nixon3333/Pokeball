@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient">
 
     <ImageView
 
@@ -12,26 +13,47 @@
         android:background="@drawable/backpoke" />
 
     <TextView
+        android:layout_margin="15dp"
+        android:text="Name"
+        android:gravity="center_horizontal"
+        android:textAllCaps="true"
+        android:textSize="50dp"
         android:id="@+id/namePoke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:text="Name"
+        android:textSize="30dp"
+        android:gravity="center_horizontal"
         android:id="@+id/heightPoke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:text="Name"
+        android:textSize="30dp"
+        android:gravity="center_horizontal"
+
         android:id="@+id/weightPoke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="30dp"
+        android:text="Name"
+        android:gravity="center_horizontal"
+
         android:id="@+id/typePoke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:gravity="center_horizontal"
+android:layout_marginTop="10dp"
+        android:text="Name"
+        android:textSize="30dp"
         android:id="@+id/statsPoke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

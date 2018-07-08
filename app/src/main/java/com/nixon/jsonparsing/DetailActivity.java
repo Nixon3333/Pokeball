@@ -92,9 +92,9 @@ public class DetailActivity extends Activity {
 
 
                     namePoke.setText(name);
-                    heightPoke.setText(height);
-                    weightPoke.setText(weight);
-                    typePoke.setText(String.valueOf(types[0].getType()));
+                    heightPoke.setText("Height : " + height);
+                    weightPoke.setText("Weight : " + weight);
+                    typePoke.setText("Type : " + String.valueOf(types[0].getType()));
                     statsPoke.setText(String.valueOf(stats[5]) + "\n" +
                             String.valueOf(stats[4]) + "\n" +
                             String.valueOf(stats[3]));

@@ -66,4 +66,6 @@ public class DetailResponse {
     public void setTypes(Types[] types) {
         this.types = types;
     }
+
+
 }

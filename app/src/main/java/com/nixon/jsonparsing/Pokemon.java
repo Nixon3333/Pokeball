@@ -1,5 +1,9 @@
 package com.nixon.jsonparsing;
 
+import android.support.annotation.NonNull;
+
+import java.util.Objects;
+
 public class Pokemon {
 
 
@@ -8,8 +12,6 @@ public class Pokemon {
     private String name;
 
     private String url;
-    private int weight;
-
 
 
     public Pokemon() {
@@ -24,13 +26,6 @@ public class Pokemon {
         this.name = name;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 
     public String getUrl() {
         return url;
@@ -50,4 +45,7 @@ public class Pokemon {
     public void setNumber(int number) {
         this.number = number;
     }
+
+
+
 }

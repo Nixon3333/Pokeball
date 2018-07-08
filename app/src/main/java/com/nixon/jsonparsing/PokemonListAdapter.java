@@ -57,6 +57,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         notifyDataSetChanged();
     }
 
+
     public void removePokemonList() {
         dataset.clear();
         notifyDataSetChanged();

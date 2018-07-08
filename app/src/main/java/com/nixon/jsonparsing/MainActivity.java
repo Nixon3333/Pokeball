@@ -8,8 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,20 +32,20 @@ public class MainActivity extends Activity {
     private int offset;
     private boolean loading;
 
-    private Button btnRandom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnRandom = findViewById(R.id.btnRandom);
+        Button btnRandom = findViewById(R.id.btnRandom);
+
 
         recyclerView = findViewById(R.id.recycleView);
         pokemonListAdapter = new PokemonListAdapter(this);
         recyclerView.setAdapter(pokemonListAdapter);
         recyclerView.setHasFixedSize(true);
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -79,6 +83,10 @@ public class MainActivity extends Activity {
 
     }
 
+    public void cbClick(View view) {
+        Toast.makeText(this, "Please buy the full version to unlock this functionality :)", Toast.LENGTH_LONG).show();
+    }
+
     public void btnRandomClick(View view) {
         pokemonListAdapter.removePokemonList();
         offset = (int) (Math.random() * 100);
@@ -100,6 +108,7 @@ public class MainActivity extends Activity {
                                                 PokemonResponse pokemonResponse = response.body();
 
                                                 ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
+
 
                                                 pokemonListAdapter.addPokemonList(pokemonList);
                                             } else {
