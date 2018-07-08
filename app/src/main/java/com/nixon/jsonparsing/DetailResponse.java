@@ -2,30 +2,53 @@ package com.nixon.jsonparsing;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DetailResponse {
+    private String height;
 
-    @SerializedName("forms")
-    @Expose
-    private ArrayList<Pokemon> forms = null;
-    @SerializedName("name")
-    @Expose
+    private String weight;
+
+    private Stats[] stats;
+
     private String name;
-    @SerializedName("weight")
-    @Expose
-    private int weight;
-    @SerializedName("height")
-    @Expose
-    private int height;
 
-    public ArrayList<Pokemon> getForms() {
-        return forms;
+    private Types[] types;
+
+    private int id;
+
+    public int getId() {
+        return id;
     }
 
-    public void setForms(ArrayList<Pokemon> forms) {
-        this.forms = forms;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public Stats[] getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats[] stats) {
+        this.stats = stats;
     }
 
     public String getName() {
@@ -36,20 +59,11 @@ public class DetailResponse {
         this.name = name;
     }
 
-    public int getWeight() {
-        return weight;
+    public Types[] getTypes() {
+        return types;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setTypes(Types[] types) {
+        this.types = types;
     }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
 }
