@@ -7,6 +7,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -68,6 +70,7 @@ public class MainActivity extends Activity {
         offset = 0;
 
         getData(offset);
+
     }
 
     private void getData(int offset) {
