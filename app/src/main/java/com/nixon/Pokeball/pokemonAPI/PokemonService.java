@@ -1,4 +1,6 @@
-package com.nixon.jsonparsing;
+package com.nixon.Pokeball.pokemonAPI;
+
+import com.nixon.Pokeball.PokemonResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

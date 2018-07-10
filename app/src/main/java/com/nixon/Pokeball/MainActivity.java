@@ -1,19 +1,20 @@
-package com.nixon.jsonparsing;
+package com.nixon.Pokeball;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.nixon.Pokeball.pokemonAPI.PokemonService;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,13 +33,16 @@ public class MainActivity extends Activity {
     private int offset;
     private boolean loading;
 
+    DBHelper dbHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnRandom = findViewById(R.id.btnRandom);
+        dbHelper = new DBHelper(getApplicationContext());
+
 
 
         recyclerView = findViewById(R.id.recycleView);
@@ -81,10 +85,11 @@ public class MainActivity extends Activity {
         getData(offset);
 
 
+
     }
 
     public void cbClick(View view) {
-        Toast.makeText(this, "Please buy the full version to unlock this functionality :)", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.please_buy, Toast.LENGTH_LONG).show();
     }
 
     public void btnRandomClick(View view) {
@@ -95,6 +100,9 @@ public class MainActivity extends Activity {
     }
 
     private void getData(int offset) {
+
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
         Log.d(TAG, "offset = " + offset);
         PokemonService service = retrofit.create(PokemonService.class);
         Call<PokemonResponse> pokemonResponseCall = service.getPokemonList(30, offset);
@@ -105,14 +113,27 @@ public class MainActivity extends Activity {
                                         public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
                                             loading = true;
                                             if (response.isSuccessful()) {
+
                                                 PokemonResponse pokemonResponse = response.body();
 
-                                                ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
+                                                ArrayList<Pokemon> pokemonList = null;
+                                                if (pokemonResponse != null) {
+                                                    pokemonList = pokemonResponse.getResults();
+                                                }
+
+
+                                                ContentValues contentValues = new ContentValues();
+                                                for (int i = 0; i < pokemonList.size() - 1; i++) {
+                                                    contentValues.put(DBHelper.KEY_NAME, pokemonList.get(i).getName());
+                                                    database.insert(DBHelper.TABLE_NAME, null, contentValues);
+                                                }
+
 
 
                                                 pokemonListAdapter.addPokemonList(pokemonList);
                                             } else {
                                                 Log.d(TAG, "onResponse: " + response.errorBody());
+
                                             }
                                         }
 
@@ -120,6 +141,19 @@ public class MainActivity extends Activity {
                                         public void onFailure(Call<PokemonResponse> call, Throwable t) {
                                             loading = true;
                                             Log.d(TAG, "onFailure: " + t.getMessage());
+                                            ArrayList<Pokemon> pokemonList = new ArrayList<>();
+                                            Cursor c = database.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
+                                            if(c!=null&&c. moveToFirst()){
+                                                do{
+
+                                                    String name  = c.getString(c.getColumnIndexOrThrow (DBHelper.KEY_NAME));
+
+                                                    Pokemon p = new Pokemon();
+                                                    p.setName(name);
+                                                    pokemonList.add(p);
+                                                }while(c.moveToNext());
+                                            }
+                                            pokemonListAdapter.addPokemonList(pokemonList);
                                         }
                                     }
         );

@@ -1,4 +1,4 @@
-package com.nixon.jsonparsing;
+package com.nixon.Pokeball;
 
 import org.junit.Test;
 

@@ -1,17 +1,18 @@
-package com.nixon.jsonparsing;
+package com.nixon.Pokeball;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
+import com.nixon.Pokeball.pokemonAPI.DetailService;
+import com.nixon.Pokeball.stats.Stats;
+import com.nixon.Pokeball.stats.Types;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,10 +24,8 @@ public class DetailActivity extends Activity {
     private static final String TAG = "detailActivity";
 
     private ImageView imagePoke;
-    private TextView namePoke, heightPoke, weightPoke, typePoke, statsPoke, tvId;
-    private PokemonListAdapter pokemonListAdapter;
+    private TextView namePoke, heightPoke, weightPoke, typePoke, statsPoke;
     private Retrofit retrofit;
-    private Context context;
     private int id;
 
 
@@ -44,6 +43,7 @@ public class DetailActivity extends Activity {
                 .baseUrl("http://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         namePoke = findViewById(R.id.namePoke);
         heightPoke = findViewById(R.id.heightPoke);
         weightPoke = findViewById(R.id.weightPoke);
@@ -51,14 +51,7 @@ public class DetailActivity extends Activity {
         statsPoke = findViewById(R.id.statsPoke);
 
 
-
         getDetail(name);
-
-
-
-
-
-
 
     }
 
@@ -92,9 +85,9 @@ public class DetailActivity extends Activity {
 
 
                     namePoke.setText(name);
-                    heightPoke.setText("Height : " + height);
-                    weightPoke.setText("Weight : " + weight);
-                    typePoke.setText("Type : " + String.valueOf(types[0].getType()));
+                    heightPoke.setText(getString(R.string.height) + height);
+                    weightPoke.setText(getString(R.string.weight) + weight);
+                    typePoke.setText(getString(R.string.type) + String.valueOf(types[0].getType()));
                     statsPoke.setText(String.valueOf(stats[5]) + "\n" +
                             String.valueOf(stats[4]) + "\n" +
                             String.valueOf(stats[3]));
@@ -107,6 +100,7 @@ public class DetailActivity extends Activity {
             @Override
             public void onFailure(Call<DetailResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
+                Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
             }
         });
 

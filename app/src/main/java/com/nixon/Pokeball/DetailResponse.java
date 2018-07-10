@@ -1,10 +1,7 @@
-package com.nixon.jsonparsing;
+package com.nixon.Pokeball;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.nixon.Pokeball.stats.Stats;
+import com.nixon.Pokeball.stats.Types;
 
 public class DetailResponse {
     private String height;

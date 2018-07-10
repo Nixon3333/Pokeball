@@ -1,7 +1,8 @@
-package com.nixon.jsonparsing;
+package com.nixon.Pokeball;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
@@ -40,9 +44,18 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         Pokemon p = dataset.get(i);
         viewHolder.textView.setText(p.getName());
 
+        Uri uri = Uri.parse("http://pokeapi.co/media/sprites/pokemon/" + p.getNumber() + ".png");
+
+
+        if (p.getNumber() == -1) {
+            uri = Uri.parse("android.resource://com.nixon.Pokeball/drawable/ic_pokeball");
+        }
+
 
         Glide.with(context)
-                .load("http://pokeapi.co/media/sprites/pokemon/" + p.getNumber() + ".png")
+                .load(uri)
+                .apply(new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .into(viewHolder.imageView);
     }
 
