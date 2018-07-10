@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Pokeball</string>
-    <string name="height">Height :</string>
-    <string name="weight">Weight :</string>
-    <string name="type">Type :</string>
+    <string name="height">Height : </string>
+    <string name="weight">Weight : </string>
+    <string name="type">Type : </string>
     <string name="no_internet">You are not connected to the internet</string>
     <string name="please_buy">Please buy the full version to unlock this functionality :)</string>
     <string name="wait_please">Wait a second, please</string>
