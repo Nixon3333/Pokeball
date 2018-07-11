@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class DetailActivity extends Activity {
     private TextView namePoke, heightPoke, weightPoke, typePoke, statsPoke;
     private Retrofit retrofit;
     private int id;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -34,24 +37,25 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        imagePoke = findViewById(R.id.imagePoke);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        imagePoke = findViewById(R.id.imagePoke);
         namePoke = findViewById(R.id.namePoke);
         heightPoke = findViewById(R.id.heightPoke);
         weightPoke = findViewById(R.id.weightPoke);
         typePoke = findViewById(R.id.typePoke);
         statsPoke = findViewById(R.id.statsPoke);
+        progressBar = findViewById(R.id.progressBar);
 
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
 
         getDetail(name);
+
 
     }
 
@@ -66,6 +70,7 @@ public class DetailActivity extends Activity {
 
 
                 if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     DetailResponse detailResponse = response.body();
 
                     String name = detailResponse.getName();
@@ -100,7 +105,9 @@ public class DetailActivity extends Activity {
             @Override
             public void onFailure(Call<DetailResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
-                Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.INVISIBLE);
+                namePoke.setText(R.string.no_internet);
+
             }
         });
 
