@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.casino.casino",
+    "sha256_cert_fingerprints":
+    ["A5:E6:F4:AA:12:35:67:1D:DC:5D:5C:8D:68:38:07:CE:E8:F3:61:3D:22:A1:F0:B8:52:99:1C:0C:FC:EA:00:55"]
+  }
+}]
